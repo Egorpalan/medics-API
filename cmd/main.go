@@ -19,32 +19,26 @@ import (
 )
 
 func main() {
-	// Инициализация конфига и логгера
 	cfg := config.LoadConfig()
 	logger.InitLogger()
 	defer logger.Log.Sync()
 
-	// Подключение к БД
 	database := db.NewDB(cfg)
 	defer database.Close()
 
-	// DI: репозиторий, usecase, handler
 	refreshTokenRepo := repository.NewRefreshTokenRepo(database)
 	authUsecase := usecase.NewAuthUsecase(refreshTokenRepo, []byte(cfg.JWTSecret))
 	authHandler := handler.NewAuthHandler(authUsecase)
 
-	// Роутер
 	r := chi.NewRouter()
 	r.Post("/token", authHandler.GenerateTokenPair)
 	r.Post("/refresh", authHandler.RefreshTokenPair)
 
-	// HTTP сервер
 	server := &http.Server{
 		Addr:    ":" + cfg.AppPort,
 		Handler: r,
 	}
 
-	// Graceful shutdown
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
