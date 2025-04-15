@@ -2,11 +2,11 @@ package db
 
 import (
 	"fmt"
-	"log"
-
 	"github.com/Egorpalan/medods-api/config"
+	"github.com/Egorpalan/medods-api/pkg/logger"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"go.uber.org/zap"
 )
 
 func NewDB(cfg *config.Config) *sqlx.DB {
@@ -16,7 +16,7 @@ func NewDB(cfg *config.Config) *sqlx.DB {
 	)
 	db, err := sqlx.Connect("postgres", dsn)
 	if err != nil {
-		log.Fatalf("Failed to connect to DB: %v", err)
+		logger.Log.Fatal("NewDB error", zap.Error(err))
 	}
 	return db
 }
