@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"os"
 	"os/signal"
@@ -52,7 +53,7 @@ func main() {
 	}()
 
 	logger.Log.Info("Starting server...", zap.String("addr", server.Addr))
-	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+	if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		logger.Log.Fatal("ListenAndServe error", zap.Error(err))
 	}
 }
