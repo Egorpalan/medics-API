@@ -77,7 +77,7 @@ make test
 
 ### 1. Получить пару токенов
 
-**POST** `/token?user_id={GUID};`
+**POST** `/token?user_id=<GUID>;`
 
 - **Параметры:**
   `user_id` — идентификатор пользователя (GUID)
@@ -85,8 +85,8 @@ make test
 
 ```json
 {
-  "accessToken": "&lt;JWT&gt;",
-  "refreshToken": "&lt;refresh_token&gt;"
+  "accessToken": "<JWT>",
+  "refreshToken": "<refresh_token>"
 }
 ```
 
@@ -99,8 +99,8 @@ make test
 
 ```json
 {
-  "access_token": "&lt;accessToken&gt;",
-  "refresh_token": "&lt;refreshToken&gt;"
+  "access_token": "<accessToken>",
+  "refresh_token": "<refreshToken>"
 }
 ```
 
@@ -115,8 +115,8 @@ make test
 
 ```json
 {
-  "accessToken": "&lt;новый JWT&gt;",
-  "refreshToken": "&lt;новый refresh&gt;"
+  "accessToken": "<новый JWT>",
+  "refreshToken": "<новый refresh>"
 }
 ```
 
@@ -149,7 +149,7 @@ curl -X POST "http://localhost:8080/token?user_id=123e4567-e89b-12d3-a456-426614
 curl -X POST "http://localhost:8080/refresh" \
   -H "Content-Type: application/json" \
   -H "X-Forwarded-For: 129.0.0.2" \
-  -d '{"access_token":"&lt;accessToken&gt;","refresh_token":"&lt;refreshToken&gt;"}'
+  -d '{"access_token":"<accessToken>","refresh_token":"<refreshToken>"}'
 ```
 
 ---
